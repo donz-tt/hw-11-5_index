@@ -13,7 +13,7 @@ select round (sum(index_length) / sum(data_length) * 100) as '% index'
 from INFORMATION_SCHEMA.TABLES;
 ```
 
-### Эталонное решение 2
+### Эталонное решение 1
 ```
 SELECT
    ROUND(SUM(data_lenght) / (SUM(data_lenght) + SUM(index_lenght)) * 100, 2) AS tables_percentage,
@@ -47,4 +47,23 @@ where date(p.payment_date) = '2005-07-30' and p.customer_id = c.customer_id;
 ```
 
 ### Эталонное решение 2
+```
+SELECT
+   CONCAT(c.last_name, ' ', c.first_name) AS full_name,
+   SUM(p.amount) AS total_amount_per_customer_per_film
+FROM
+   payment p
+JOIN
+   rental r ON p.payment_date = r.rental_date
+JOIN
+   customer c ON r.customer_id = c.customer_id
+JOIN
+   inventory i ON r.inventory_id = i.inventory_id
+JOIN
+   film f ON i.film_id = f.film_id
+WHERE
+   p.payment_date >= '2005-07-30' AND p.payment_date < '2005-07-31'
+GROUP BY
+   c.customer_id, c.last_name, c.first_name;
+```
 ---
