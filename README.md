@@ -13,6 +13,18 @@ select round (sum(index_length) / sum(data_length) * 100) as '% index'
 from INFORMATION_SCHEMA.TABLES;
 ```
 
+### Эталонное решение 2
+```
+SELECT
+   ROUND(SUM(data_lenght) / (SUM(data_lenght) + SUM(index_lenght)) * 100, 2) AS tables_percentage,
+   ROUND(SUM(index_lenght) / (SUM(data_lenght) + SUM(index_lenght)) * 100, 2) AS index_percentage
+FROM
+   information_schema.tables
+WHERE
+   table_schema = 'sakila';
+```
+
+
 ---
 
 ### Задание 2
@@ -34,4 +46,5 @@ from payment p, customer c
 where date(p.payment_date) = '2005-07-30' and p.customer_id = c.customer_id;
 ```
 
+### Эталонное решение 2
 ---
